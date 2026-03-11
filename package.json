@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev:lobby": "npm run dev --prefix lobby-server",
-    "dev:quizz": "npm run dev --prefix quizz-server",
+    "dev:quiz": "npm run dev --prefix quiz-server",
     "dev:taboo": "npm run dev --prefix taboo-server",
     "dev:uno": "npm run dev --prefix uno-server",
     "dev:skyjow": "npm run dev --prefix skyjow-server",
-    "dev": "concurrently -n LOBBY,QUIZZ,TABOO,UNO,SKYJOW \"npm run dev:lobby\" \"npm run dev:quizz\" \"npm run dev:taboo\" \"npm run dev:uno\" \"npm run dev:skyjow\""
+    "dev": "concurrently -n LOBBY,QUIZ,TABOO,UNO,SKYJOW \"npm run dev:lobby\" \"npm run dev:quiz\" \"npm run dev:taboo\" \"npm run dev:uno\" \"npm run dev:skyjow\""
   },
   "keywords": [],
   "author": "",
