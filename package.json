@@ -9,7 +9,9 @@
     "dev:taboo": "npm run dev --prefix taboo-server",
     "dev:uno": "npm run dev --prefix uno-server",
     "dev:skyjow": "npm run dev --prefix skyjow-server",
-    "dev": "concurrently -n LOBBY,QUIZ,TABOO,UNO,SKYJOW \"npm run dev:lobby\" \"npm run dev:quiz\" \"npm run dev:taboo\" \"npm run dev:uno\" \"npm run dev:skyjow\""
+    "dev:yahtzee": "npm run dev --prefix yahtzee-server",
+    "dev:kill": "fuser -k 10000/tcp && fuser -k 10001/tcp && fuser -k 10002/tcp && fuser -k 10003/tcp && fuser -k 10004/tcp && fuser -k 10005/tcp",
+    "dev": "concurrently -n LOBBY,QUIZ,TABOO,UNO,SKYJOW,YAHTZEE \"npm run dev:lobby\" \"npm run dev:quiz\" \"npm run dev:taboo\" \"npm run dev:uno\" \"npm run dev:skyjow\" \"npm run dev:yahtzee\""
   },
   "keywords": [],
   "author": "",
