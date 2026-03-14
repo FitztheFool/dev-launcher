@@ -10,8 +10,8 @@
     "dev:uno": "npm run dev --prefix uno-server",
     "dev:skyjow": "npm run dev --prefix skyjow-server",
     "dev:yahtzee": "npm run dev --prefix yahtzee-server",
-    "dev:kill": "fuser -k 10000/tcp && fuser -k 10001/tcp && fuser -k 10002/tcp && fuser -k 10003/tcp && fuser -k 10004/tcp && fuser -k 10005/tcp",
-    "dev": "concurrently -n LOBBY,QUIZ,TABOO,UNO,SKYJOW,YAHTZEE \"npm run dev:lobby\" \"npm run dev:quiz\" \"npm run dev:taboo\" \"npm run dev:uno\" \"npm run dev:skyjow\" \"npm run dev:yahtzee\""
+    "dev:kill": "fuser -k 10000/tcp && fuser -k 10001/tcp && fuser -k 10002/tcp && fuser -k 10003/tcp && fuser -k 10004/tcp && fuser -k 10005/tcp && fuser -k 10006/tcp",
+    "dev": "concurrently -n LOBBY,QUIZ,TABOO,UNO,SKYJOW,YAHTZEE, PUISSANCE4 \"npm run dev:lobby\" \"npm run dev:quiz\" \"npm run dev:taboo\" \"npm run dev:uno\" \"npm run dev:skyjow\" \"npm run dev:yahtzee\" \"npm run dev:puissance4\""
   },
   "keywords": [],
   "author": "",

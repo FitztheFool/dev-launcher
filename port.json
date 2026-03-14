@@ -3,5 +3,7 @@
     "uno": 10001,
     "quiz": 10002,
     "taboo": 10003,
-    "skyjow": 10004
+    "skyjow": 10004,
+    "yahtzee": 10005,
+    "puissance4": 10006
 }
