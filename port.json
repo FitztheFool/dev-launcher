@@ -7,5 +7,7 @@
     "yahtzee": 10005,
     "puissance4": 10006,
     "just-one": 10007,
-    "battleship": 10008
+    "battleship": 10008,
+    "diamant": 10009,
+    "impostor": 10010
 }
