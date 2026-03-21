@@ -2,4 +2,4 @@
 **/
 !.gitignore
 !package.json
-!port.json
+!README.md
