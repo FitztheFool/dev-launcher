@@ -15,7 +15,8 @@
     "dev:battleship": "npm run dev --prefix battleship-server",
     "dev:diamant": "npm run dev --prefix diamant-server",
     "dev:impostor": "npm run dev --prefix impostor-server",
-    "dev:kill": "fuser -k 10000/tcp && fuser -k 10001/tcp && fuser -k 10002/tcp && fuser -k 10003/tcp && fuser -k 10004/tcp && fuser -k 10005/tcp && fuser -k 10006/tcp && fuser -k 10007/tcp && fuser -k 10008/tcp && fuser -k 10009/tcp && fuser -k 10010/tcp",
+    "dev:kill": "fuser -k 10000/tcp 10001/tcp 10002/tcp 10003/tcp 10004/tcp 10005/tcp 10006/tcp 10007/tcp 10008/tcp 10009/tcp 10010/tcp 2>/dev/null; true",
+    "predev": "fuser -k 10000/tcp 10001/tcp 10002/tcp 10003/tcp 10004/tcp 10005/tcp 10006/tcp 10007/tcp 10008/tcp 10009/tcp 10010/tcp 2>/dev/null; true",
     "dev": "concurrently -n LOBBY,QUIZ,TABOO,UNO,SKYJOW,YAHTZEE,PUISSANCE4,JUSTONE,BATTLESHIP,DIAMANT,IMPOSTOR \"npm run dev:lobby\" \"npm run dev:quiz\" \"npm run dev:taboo\" \"npm run dev:uno\" \"npm run dev:skyjow\" \"npm run dev:yahtzee\" \"npm run dev:puissance4\" \"npm run dev:justone\" \"npm run dev:battleship\" \"npm run dev:diamant\" \"npm run dev:impostor\""
   },
   "devDependencies": {
