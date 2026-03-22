@@ -2,6 +2,7 @@
 
 | Server                                                               | Port       |
 | ---------------------------------------------------------------------|:----------:|
+| [Quiz](https://github.com/FitztheFool/quiz)                          | 3000       |
 | [Lobby](https://github.com/FitztheFool/lobby-server)                 | 10 000     |
 | [Uno](https://github.com/FitztheFool/uno-server)                     | 10 001     |
 | [Quiz](https://github.com/FitztheFool/quiz-server)                   | 10 002     |
@@ -13,7 +14,3 @@
 | [Bataille Navale](https://github.com/FitztheFool/battleship-server)  | 10 008     |
 | [Diamant](https://github.com/FitztheFool/diamant-server)             | 10 009     |
 | [Imposteur](https://github.com/FitztheFool/impostor-server)          | 10 010     |
-
-TODO :
-- deco/ reco
-- UI diamant
