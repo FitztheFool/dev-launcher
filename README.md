@@ -2,7 +2,7 @@
 
 | Server                                                               | Port       |
 | ---------------------------------------------------------------------|:----------:|
-| [Quiz](https://github.com/FitztheFool/quiz)                          | 3000       |
+| [Front](https://github.com/FitztheFool/quiz)                         | 3000       |
 | [Lobby](https://github.com/FitztheFool/lobby-server)                 | 10 000     |
 | [Uno](https://github.com/FitztheFool/uno-server)                     | 10 001     |
 | [Quiz](https://github.com/FitztheFool/quiz-server)                   | 10 002     |
