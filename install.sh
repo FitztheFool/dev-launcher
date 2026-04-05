@@ -148,7 +148,7 @@ DISCORD_CLIENT_ID="${DISCORD_CLIENT_ID}"
 DISCORD_CLIENT_SECRET="${DISCORD_CLIENT_SECRET}"
 
 GOOGLE_CLIENT_ID="${GOOGLE_CLIENT_ID}"
-GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+GOOGLE_CLIENT_SECRET="${GOOGLE_CLIENT_SECRET}"
 
 CLOUDINARY_CLOUD_NAME="${CLOUDINARY_CLOUD_NAME}"
 CLOUDINARY_API_KEY="${CLOUDINARY_API_KEY}"
@@ -165,6 +165,7 @@ NEXT_PUBLIC_JUSTONE_SERVER_URL="http://localhost:10007"
 NEXT_PUBLIC_BATTLESHIP_SERVER_URL="http://localhost:10008"
 NEXT_PUBLIC_DIAMANT_SERVER_URL="http://localhost:10009"
 NEXT_PUBLIC_IMPOSTOR_SERVER_URL="http://localhost:10010"
+
 EOF
 success ".env frontend (quiz)"
 
@@ -235,12 +236,17 @@ install_deps "$QUIZ_DIR" "quiz (frontend)"
 header "Base de données"
 
 info "Prisma generate + migrate deploy"
+
+# Toujours générer AVANT (db push ne génère plus en v7)
 (cd "$QUIZ_DIR" && npx prisma generate)
-(cd "$QUIZ_DIR" && npx prisma migrate deploy) 2>/dev/null || {
+
+if (cd "$QUIZ_DIR" && npx prisma migrate deploy); then
+    success "Migrations appliquées"
+else
     warn "migrate deploy échoué — tentative avec db push"
-    (cd "$QUIZ_DIR" && npx prisma db push --skip-generate)
-}
-success "Schéma appliqué"
+    (cd "$QUIZ_DIR" && npx prisma db push --accept-data-loss)
+    success "Schéma synchronisé avec db push"
+fi
 
 ask "Lancer le seed de données de test ? (o/N)"
 read -r DO_SEED
