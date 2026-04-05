@@ -14,3 +14,31 @@
 | [Bataille Navale](https://github.com/FitztheFool/battleship-server)  | 10 008     |
 | [Diamant](https://github.com/FitztheFool/diamant-server)             | 10 009     |
 | [Imposteur](https://github.com/FitztheFool/impostor-server)          | 10 010     |
+
+---
+
+`install.sh` va tout installer, créer les .env et installer les nodes_modules. Permet aussi de tout mettre à jour.
+
+---
+
+Questions de l'installeur : 
+
+- URL db postgresql 
+- URL du front, défaut `http://localhost:3000`
+- `GROQ_API_KEY` (facultatif) : pour générer des quiz
+- `DISCORD_CLIENT_ID` et `DISCORD_CLIENT_SECRET` : oAuth avec discord
+- `GOOGLE_CLIENT_ID` et `GOOGLE_CLIENT_SECRET` : oAuth avec google
+- `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` : gesstion des images 
+- Proposition de seed avec des données de test
+
+---
+
+Hébergerment du front :
+- vercel
+    - CRON (`/api/cron/cleanup/route.ts`) supprimer les guests une fois par semaine
+
+Hébergement de la db :
+- neon
+
+Hébergement des serveurs de jeu :
+- render

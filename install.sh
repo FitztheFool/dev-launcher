@@ -24,7 +24,11 @@ header "Vérification des prérequis"
 
 for cmd in git node npm openssl; do
     if command -v "$cmd" &>/dev/null; then
-        success "$cmd disponible ($(command $cmd --version 2>&1 | head -1))"
+        if [[ "$cmd" == "openssl" ]]; then
+            success "$cmd disponible ($(openssl version 2>&1 | head -1))"
+        else
+            success "$cmd disponible ($(command $cmd --version 2>&1 | head -1))"
+        fi
     else
         echo -e "${RED}  ✖ $cmd introuvable — installe-le avant de continuer.${RESET}"
         exit 1
@@ -37,8 +41,10 @@ header "Configuration"
 # Génération automatique
 INTERNAL_API_KEY=$(openssl rand -base64 32)
 NEXTAUTH_SECRET=$(openssl rand -base64 32)
+CRON_SECRET=$(openssl rand -base64 32)
 success "INTERNAL_API_KEY généré"
 success "NEXTAUTH_SECRET généré"
+success "CRON_SECRET généré"
 
 # DATABASE_URL
 ask "DATABASE_URL PostgreSQL (ex: postgresql://user:pass@host/db?sslmode=require)"
@@ -128,11 +134,25 @@ header "Génération des fichiers .env"
 # .env Frontend (quiz)
 cat > "$QUIZ_DIR/.env" <<EOF
 DATABASE_URL="${DATABASE_URL}"
+
 NEXTAUTH_SECRET="${NEXTAUTH_SECRET}"
 NEXTAUTH_URL="${NEXTAUTH_URL}"
+
 INTERNAL_API_KEY="${INTERNAL_API_KEY}"
 
+CRON_SECRET="${CRON_SECRET}"
+
 GROQ_API_KEY="${GROQ_API_KEY}"
+
+DISCORD_CLIENT_ID="${DISCORD_CLIENT_ID}"
+DISCORD_CLIENT_SECRET="${DISCORD_CLIENT_SECRET}"
+
+GOOGLE_CLIENT_ID="${GOOGLE_CLIENT_ID}"
+GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+
+CLOUDINARY_CLOUD_NAME="${CLOUDINARY_CLOUD_NAME}"
+CLOUDINARY_API_KEY="${CLOUDINARY_API_KEY}"
+CLOUDINARY_API_SECRET="${CLOUDINARY_API_SECRET}"
 
 NEXT_PUBLIC_LOBBY_SERVER_URL="http://localhost:10000"
 NEXT_PUBLIC_UNO_SERVER_URL="http://localhost:10001"
@@ -145,16 +165,6 @@ NEXT_PUBLIC_JUSTONE_SERVER_URL="http://localhost:10007"
 NEXT_PUBLIC_BATTLESHIP_SERVER_URL="http://localhost:10008"
 NEXT_PUBLIC_DIAMANT_SERVER_URL="http://localhost:10009"
 NEXT_PUBLIC_IMPOSTOR_SERVER_URL="http://localhost:10010"
-
-DISCORD_CLIENT_ID="${DISCORD_CLIENT_ID}"
-DISCORD_CLIENT_SECRET="${DISCORD_CLIENT_SECRET}"
-
-GOOGLE_CLIENT_ID="${GOOGLE_CLIENT_ID}"
-GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
-
-CLOUDINARY_CLOUD_NAME="${CLOUDINARY_CLOUD_NAME}"
-CLOUDINARY_API_KEY="${CLOUDINARY_API_KEY}"
-CLOUDINARY_API_SECRET="${CLOUDINARY_API_SECRET}"
 EOF
 success ".env frontend (quiz)"
 
