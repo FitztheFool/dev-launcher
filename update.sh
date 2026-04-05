@@ -36,6 +36,19 @@ pull_repo() {
         # Affiche "Already up to date." ou les fichiers mis à jour
         echo -e "${GREEN}✔  OK${NC}       $name — $(echo "$output" | tail -1)"
         ((SUCCESS++))
+
+        # npm i si un package.json est présent
+        if [ -f "$dir/package.json" ]; then
+            echo -e "${CYAN}📦 NPM${NC}      $name — installation des dépendances..."
+            npm_output=$(npm install --prefix "$dir" 2>&1)
+            npm_exit=$?
+            if [ $npm_exit -eq 0 ]; then
+                echo -e "${GREEN}✔  NPM OK${NC}   $name — $(echo "$npm_output" | tail -1)"
+            else
+                echo -e "${RED}✘  NPM ERR${NC}  $name"
+                echo "$npm_output" | sed 's/^/            /'
+            fi
+        fi
     else
         echo -e "${RED}✘  ERREUR${NC}   $name"
         echo "$output" | sed 's/^/            /'
