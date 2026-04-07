@@ -104,8 +104,8 @@ clone_or_pull() {
 }
 
 # Frontend
-clone_or_pull "quiz" "$SCRIPT_DIR/../quiz"
-QUIZ_DIR="$(cd "$SCRIPT_DIR/../quiz" && pwd)"
+clone_or_pull "kwizar" "$SCRIPT_DIR/../kwizar"
+KWIZAR_DIR="$(cd "$SCRIPT_DIR/../kwizar" && pwd)"
 
 # Serveurs dans dev-launcher
 declare -A SERVERS=(
@@ -132,7 +132,7 @@ success "Tous les dépôts sont prêts"
 header "Génération des fichiers .env"
 
 # .env Frontend (quiz)
-cat > "$QUIZ_DIR/.env" <<EOF
+cat > "$KWIZAR_DIR/.env" <<EOF
 DATABASE_URL="${DATABASE_URL}"
 
 NEXTAUTH_SECRET="${NEXTAUTH_SECRET}"
@@ -230,7 +230,7 @@ for entry in "${SIMPLE_SERVERS[@]}"; do
     install_deps "$SCRIPT_DIR/$server" "$server"
 done
 install_deps "$SCRIPT_DIR/lobby-server" "lobby-server"
-install_deps "$QUIZ_DIR" "quiz (frontend)"
+install_deps "$KWIZAR_DIR" "quiz (frontend)"
 
 # ─── Base de données ──────────────────────────────────────────────────────────
 header "Base de données"
@@ -238,13 +238,13 @@ header "Base de données"
 info "Prisma generate + migrate deploy"
 
 # Toujours générer AVANT (db push ne génère plus en v7)
-(cd "$QUIZ_DIR" && npx prisma generate)
+(cd "$KWIZAR_DIR" && npx prisma generate)
 
-if (cd "$QUIZ_DIR" && npx prisma migrate deploy); then
+if (cd "$KWIZAR_DIR" && npx prisma migrate deploy); then
     success "Migrations appliquées"
 else
     warn "migrate deploy échoué — tentative avec db push"
-    (cd "$QUIZ_DIR" && npx prisma db push --accept-data-loss)
+    (cd "$KWIZAR_DIR" && npx prisma db push --accept-data-loss)
     success "Schéma synchronisé avec db push"
 fi
 
@@ -252,7 +252,7 @@ ask "Lancer le seed de données de test ? (o/N)"
 read -r DO_SEED
 if [[ "${DO_SEED,,}" == "o" || "${DO_SEED,,}" == "oui" || "${DO_SEED,,}" == "y" ]]; then
     info "Seed en cours…"
-    (cd "$QUIZ_DIR" && npm run db:seed)
+    (cd "$KWIZAR_DIR" && npm run db:seed)
     success "Seed terminé"
 fi
 
@@ -265,7 +265,7 @@ echo -e "  ${CYAN}# Terminal 1 — Serveurs de jeu${RESET}"
 echo -e "  cd $(realpath "$SCRIPT_DIR") && npm run dev"
 echo ""
 echo -e "  ${CYAN}# Terminal 2 — Frontend${RESET}"
-echo -e "  cd $QUIZ_DIR && npm run dev"
+echo -e "  cd $KWIZAR_DIR && npm run dev"
 echo ""
 echo -e "  ${CYAN}# Puis ouvrir${RESET} ${BOLD}${NEXTAUTH_URL}${RESET}"
 echo ""
