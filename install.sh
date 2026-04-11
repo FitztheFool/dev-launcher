@@ -225,6 +225,13 @@ install_deps() {
 }
 
 install_deps "$SCRIPT_DIR" "dev-launcher (root)"
+
+# Le package partagé doit être installé et buildé avant les serveurs qui en dépendent
+install_deps "$SCRIPT_DIR/shared" "shared"
+info "shared — build"
+npm run build --prefix "$SCRIPT_DIR/shared" --loglevel error
+success "shared (build)"
+
 for entry in "${SIMPLE_SERVERS[@]}"; do
     server="${entry%%:*}"
     install_deps "$SCRIPT_DIR/$server" "$server"
