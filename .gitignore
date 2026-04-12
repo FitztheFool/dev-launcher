@@ -4,3 +4,5 @@
 !package.json
 !README.md
 !install.sh
+!shared/
+!shared/**
