@@ -35,7 +35,6 @@ Questions de l'installeur :
 
 Hébergerment du front :
 - vercel
-    - CRON (`/api/cron/cleanup/route.ts`) supprimer les guests une fois par semaine
 
 Hébergement de la db :
 - neon
