@@ -4,9 +4,3 @@
 !package.json
 !README.md
 !install.sh
-!shared/
-!shared/**
-shared/node_modules/
-shared/node_modules/**
-shared/dist/
-shared/dist/**

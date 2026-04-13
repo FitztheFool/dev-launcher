@@ -107,6 +107,9 @@ clone_or_pull() {
 clone_or_pull "kwizar" "$SCRIPT_DIR/../kwizar"
 KWIZAR_DIR="$(cd "$SCRIPT_DIR/../kwizar" && pwd)"
 
+# Package partagé
+clone_or_pull "shared" "$SCRIPT_DIR/shared"
+
 # Serveurs dans dev-launcher
 declare -A SERVERS=(
     ["lobby-server"]="10000"
