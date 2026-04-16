@@ -193,6 +193,7 @@ for entry in "${SIMPLE_SERVERS[@]}"; do
 FRONTEND_URL="${FRONTEND_URL}"
 PORT=${port}
 INTERNAL_API_KEY="${INTERNAL_API_KEY}"
+LOBBY_SERVER_URL="http://localhost:10000"
 EOF
     success ".env $server (port $port)"
 done
