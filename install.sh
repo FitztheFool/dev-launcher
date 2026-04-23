@@ -86,6 +86,11 @@ read -r CLOUDINARY_API_KEY
 ask "CLOUDINARY_API_SECRET"
 read -r CLOUDINARY_API_SECRET
 
+ask "GMAIL_USER (adresse Gmail pour l'envoi d'emails)"
+read -r GMAIL_USER
+ask "GMAIL_APP_PASSWORD (mot de passe d'application Gmail)"
+read -r GMAIL_APP_PASSWORD
+
 # ─── Clonage des dépôts ───────────────────────────────────────────────────────
 header "Clonage des dépôts"
 
@@ -156,6 +161,9 @@ GOOGLE_CLIENT_SECRET="${GOOGLE_CLIENT_SECRET}"
 CLOUDINARY_CLOUD_NAME="${CLOUDINARY_CLOUD_NAME}"
 CLOUDINARY_API_KEY="${CLOUDINARY_API_KEY}"
 CLOUDINARY_API_SECRET="${CLOUDINARY_API_SECRET}"
+
+GMAIL_USER="${GMAIL_USER}"
+GMAIL_APP_PASSWORD="${GMAIL_APP_PASSWORD}"
 
 NEXT_PUBLIC_LOBBY_SERVER_URL="http://localhost:10000"
 NEXT_PUBLIC_UNO_SERVER_URL="http://localhost:10001"
