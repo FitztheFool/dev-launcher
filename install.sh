@@ -88,8 +88,12 @@ read -r CLOUDINARY_API_SECRET
 
 ask "GMAIL_USER (adresse Gmail pour l'envoi d'emails)"
 read -r GMAIL_USER
-ask "GMAIL_APP_PASSWORD (mot de passe d'application Gmail)"
-read -r GMAIL_APP_PASSWORD
+ask "GMAIL_CLIENT_ID (Google Cloud OAuth2 — pour l'envoi d'emails)"
+read -r GMAIL_CLIENT_ID
+ask "GMAIL_CLIENT_SECRET"
+read -r GMAIL_CLIENT_SECRET
+ask "GMAIL_REFRESH_TOKEN"
+read -r GMAIL_REFRESH_TOKEN
 
 # ─── Clonage des dépôts ───────────────────────────────────────────────────────
 header "Clonage des dépôts"
@@ -163,7 +167,9 @@ CLOUDINARY_API_KEY="${CLOUDINARY_API_KEY}"
 CLOUDINARY_API_SECRET="${CLOUDINARY_API_SECRET}"
 
 GMAIL_USER="${GMAIL_USER}"
-GMAIL_APP_PASSWORD="${GMAIL_APP_PASSWORD}"
+GMAIL_CLIENT_ID="${GMAIL_CLIENT_ID}"
+GMAIL_CLIENT_SECRET="${GMAIL_CLIENT_SECRET}"
+GMAIL_REFRESH_TOKEN="${GMAIL_REFRESH_TOKEN}"
 
 NEXT_PUBLIC_LOBBY_SERVER_URL="http://localhost:10000"
 NEXT_PUBLIC_UNO_SERVER_URL="http://localhost:10001"
