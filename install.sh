@@ -47,12 +47,19 @@ success "NEXTAUTH_SECRET généré"
 success "CRON_SECRET généré"
 
 # DATABASE_URL
-ask "DATABASE_URL PostgreSQL (ex: postgresql://user:pass@host/db?sslmode=require)"
+ask "DATABASE_URL PostgreSQL (ex: postgresql://user:pass@host/db ?sslmode=verify-full est ajouté)"
 read -r DATABASE_URL
 while [[ -z "$DATABASE_URL" ]]; do
     warn "La DATABASE_URL est obligatoire."
     read -r DATABASE_URL
 done
+# Remplacer un sslmode existant ou ajouter sslmode=verify-full
+DATABASE_URL=$(echo "$DATABASE_URL" | sed 's/[?&]sslmode=[^&]*//')
+if [[ "$DATABASE_URL" == *"?"* ]]; then
+    DATABASE_URL="${DATABASE_URL}&sslmode=verify-full"
+else
+    DATABASE_URL="${DATABASE_URL}?sslmode=verify-full"
+fi
 
 # NEXTAUTH_URL
 ask "URL publique de l'application (défaut: http://localhost:3000)"
@@ -248,8 +255,8 @@ header "Installation des dépendances npm"
 install_deps() {
     local dir="$1"
     local name="$2"
-    info "$name — npm install"
-    npm install --prefix "$dir" --loglevel error
+    info "$name — npm ci"
+    npm ci --prefix "$dir" --loglevel error
     success "$name"
 }
 
@@ -276,12 +283,26 @@ info "Prisma generate + migrate deploy"
 # Toujours générer AVANT (db push ne génère plus en v7)
 (cd "$KWIZAR_DIR" && npx prisma generate)
 
-if (cd "$KWIZAR_DIR" && npx prisma migrate deploy); then
+MIGRATE_OUT=$(cd "$KWIZAR_DIR" && npx prisma migrate deploy 2>&1) && MIGRATE_OK=true || MIGRATE_OK=false
+
+if $MIGRATE_OK; then
     success "Migrations appliquées"
 else
-    warn "migrate deploy échoué — tentative avec db push"
+    warn "migrate deploy échoué — synchronisation avec db push"
     (cd "$KWIZAR_DIR" && npx prisma db push --accept-data-loss)
-    success "Schéma synchronisé avec db push"
+
+    # Le schéma est maintenant synchronisé — marquer les migrations échouées/pending comme appliquées
+    while IFS= read -r failed_migration; do
+        [[ -z "$failed_migration" ]] && continue
+        warn "Résolution de la migration : $failed_migration"
+        (cd "$KWIZAR_DIR" && npx prisma migrate resolve --applied "$failed_migration") || true
+    done < <(echo "$MIGRATE_OUT" | grep -oE '[0-9]{14}_[a-zA-Z0-9_]+')
+
+    # Réessayer pour appliquer d'éventuelles migrations restantes
+    (cd "$KWIZAR_DIR" && npx prisma migrate deploy) || \
+        warn "Des migrations sont encore en attente — vérifier avec 'prisma migrate status'"
+
+    success "Schéma synchronisé"
 fi
 
 ask "Lancer le seed de données de test ? (o/N)"
