@@ -23,12 +23,16 @@
 
 Questions de l'installeur : 
 
-- URL db postgresql 
-- URL du front, défaut `http://localhost:3000`
-- `GROQ_API_KEY` (facultatif) : pour générer des quiz
+- `URL db postgresql` : `postgresql://neondb_owner:xxxx@xxx/neondb?sslmode=verify-full`
+- `URL du front` : défaut `http://localhost:3000`
+- `NODE_ENV` : défaut `development`
+- `GROQ_API_KEY` (facultatif) : pour générer des quizzes
+- `GEMINI_KEY` (facultatif) : pour générer des quizzes
 - `DISCORD_CLIENT_ID` et `DISCORD_CLIENT_SECRET` : oAuth avec discord
 - `GOOGLE_CLIENT_ID` et `GOOGLE_CLIENT_SECRET` : oAuth avec google
-- `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` : gesstion des images 
+- `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` : gestion des images 
+- `UNSPLASH_ACCESS_KEY`, `UNSPLASH_SECRET_KEY` : gestion des images de couverture des quizzes
+- `GMAIL_USER`, `GMAIL_CLIENT_ID`, `GMAIL_CLIENT_SECRET`, `GMAIL_REFRESH_TOKEN` : envoie de mail 
 - Proposition de seed avec des données de test
 
 ---
