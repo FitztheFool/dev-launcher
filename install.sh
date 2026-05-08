@@ -69,6 +69,11 @@ NEXTAUTH_URL="${NEXTAUTH_URL:-http://localhost:3000}"
 # FRONTEND_URL pour les serveurs (sans trailing slash)
 FRONTEND_URL="${NEXTAUTH_URL%/}"
 
+# NODE_ENV
+ask "NODE_ENV (défaut: development)"
+read -r NODE_ENV
+NODE_ENV="${NODE_ENV:-development}"
+
 # Optionnels
 echo ""
 info "Variables optionnelles (laisser vide pour ignorer)"
@@ -164,6 +169,8 @@ DATABASE_URL="${DATABASE_URL}"
 
 NEXTAUTH_SECRET="${NEXTAUTH_SECRET}"
 NEXTAUTH_URL="${NEXTAUTH_URL}"
+
+NODE_ENV="${NODE_ENV}"
 
 INTERNAL_API_KEY="${INTERNAL_API_KEY}"
 
