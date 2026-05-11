@@ -40,9 +40,11 @@ header "Configuration"
 
 # Génération automatique
 INTERNAL_API_KEY=$(openssl rand -base64 32)
+SOCKET_USER_SECRET=$(openssl rand -base64 32)
 NEXTAUTH_SECRET=$(openssl rand -base64 32)
 CRON_SECRET=$(openssl rand -base64 32)
 success "INTERNAL_API_KEY généré"
+success "SOCKET_USER_SECRET généré"
 success "NEXTAUTH_SECRET généré"
 success "CRON_SECRET généré"
 
@@ -173,6 +175,7 @@ NEXTAUTH_URL="${NEXTAUTH_URL}"
 NODE_ENV="${NODE_ENV}"
 
 INTERNAL_API_KEY="${INTERNAL_API_KEY}"
+SOCKET_USER_SECRET="${SOCKET_USER_SECRET}"
 
 CRON_SECRET="${CRON_SECRET}"
 
@@ -232,6 +235,7 @@ for entry in "${SIMPLE_SERVERS[@]}"; do
 FRONTEND_URL="${FRONTEND_URL}"
 PORT=${port}
 INTERNAL_API_KEY="${INTERNAL_API_KEY}"
+SOCKET_USER_SECRET="${SOCKET_USER_SECRET}"
 LOBBY_SERVER_URL="http://localhost:10000"
 EOF
     success ".env $server (port $port)"
@@ -242,6 +246,7 @@ cat > "$SCRIPT_DIR/lobby-server/.env" <<EOF
 FRONTEND_URL="${FRONTEND_URL}"
 PORT=10000
 INTERNAL_API_KEY="${INTERNAL_API_KEY}"
+SOCKET_USER_SECRET="${SOCKET_USER_SECRET}"
 
 UNO_SERVER_URL="http://localhost:10001"
 QUIZ_SERVER_URL="http://localhost:10002"
