@@ -14,6 +14,7 @@
 | [Bataille Navale](https://github.com/FitztheFool/battleship-server)  | 10 008     |
 | [Diamant](https://github.com/FitztheFool/diamant-server)             | 10 009     |
 | [Imposteur](https://github.com/FitztheFool/impostor-server)          | 10 010     |
+| [Ludo](https://github.com/FitztheFool/ludo-server)                   | 10 011     |
 
 ---
 
