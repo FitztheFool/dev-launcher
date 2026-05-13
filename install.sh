@@ -154,6 +154,7 @@ declare -A SERVERS=(
     ["battleship-server"]="10008"
     ["diamant-server"]="10009"
     ["impostor-server"]="10010"
+    ["ludo-server"]="10011"
 )
 
 for server in "${!SERVERS[@]}"; do
@@ -210,6 +211,7 @@ NEXT_PUBLIC_JUSTONE_SERVER_URL="http://localhost:10007"
 NEXT_PUBLIC_BATTLESHIP_SERVER_URL="http://localhost:10008"
 NEXT_PUBLIC_DIAMANT_SERVER_URL="http://localhost:10009"
 NEXT_PUBLIC_IMPOSTOR_SERVER_URL="http://localhost:10010"
+NEXT_PUBLIC_LUDO_SERVER_URL="http://localhost:10011"
 
 EOF
 success ".env frontend (quiz)"
@@ -226,6 +228,7 @@ SIMPLE_SERVERS=(
     "battleship-server:10008"
     "diamant-server:10009"
     "impostor-server:10010"
+    "ludo-server:10011"
 )
 
 for entry in "${SIMPLE_SERVERS[@]}"; do
@@ -258,6 +261,7 @@ JUSTONE_SERVER_URL="http://localhost:10007"
 BATTLESHIP_SERVER_URL="http://localhost:10008"
 DIAMANT_SERVER_URL="http://localhost:10009"
 IMPOSTOR_SERVER_URL="http://localhost:10010"
+LUDO_SERVER_URL="http://localhost:10011"
 EOF
 success ".env lobby-server (port 10000)"
 
