@@ -15,6 +15,7 @@
 | [Diamant](https://github.com/FitztheFool/diamant-server)             | 10 009     |
 | [Imposteur](https://github.com/FitztheFool/impostor-server)          | 10 010     |
 | [Ludo](https://github.com/FitztheFool/ludo-server)                   | 10 011     |
+| [Perudo](https://github.com/FitztheFool/perudo-server)               | 10 012     |
 
 ---
 
