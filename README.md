@@ -47,3 +47,6 @@ Hébergement de la db :
 
 Hébergement des serveurs de jeu :
 - render
+
+Lancement des crons :
+- console.cron-job
