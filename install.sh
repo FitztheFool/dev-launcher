@@ -156,6 +156,7 @@ declare -A SERVERS=(
     ["impostor-server"]="10010"
     ["ludo-server"]="10011"
     ["perudo-server"]="10012"
+    ["cant-stop-server"]="10013"
 )
 
 for server in "${!SERVERS[@]}"; do
@@ -214,6 +215,7 @@ NEXT_PUBLIC_DIAMANT_SERVER_URL="http://localhost:10009"
 NEXT_PUBLIC_IMPOSTOR_SERVER_URL="http://localhost:10010"
 NEXT_PUBLIC_LUDO_SERVER_URL="http://localhost:10011"
 NEXT_PUBLIC_PERUDO_SERVER_URL="http://localhost:10012"
+NEXT_PUBLIC_CANT_STOP_SERVER_URL="http://localhost:10013"
 
 EOF
 success ".env frontend (quiz)"
@@ -232,6 +234,7 @@ SIMPLE_SERVERS=(
     "impostor-server:10010"
     "ludo-server:10011"
     "perudo-server:10012"
+    "cant-stop-server:10013"
 )
 
 for entry in "${SIMPLE_SERVERS[@]}"; do
@@ -266,6 +269,7 @@ DIAMANT_SERVER_URL="http://localhost:10009"
 IMPOSTOR_SERVER_URL="http://localhost:10010"
 LUDO_SERVER_URL="http://localhost:10011"
 PERUDO_SERVER_URL="http://localhost:10012"
+CANT_STOP_SERVER_URL="http://localhost:10013"
 EOF
 success ".env lobby-server (port 10000)"
 

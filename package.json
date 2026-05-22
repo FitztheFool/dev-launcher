@@ -17,10 +17,11 @@
     "dev:impostor": "npm run dev --prefix impostor-server",
     "dev:ludo": "npm run dev --prefix ludo-server",
     "dev:perudo": "npm run dev --prefix perudo-server",
+    "dev:cantstop": "npm run dev --prefix cant-stop-server",
     "build:shared": "npm run build --prefix shared",
-    "dev:kill": "fuser -k 10000/tcp 10001/tcp 10002/tcp 10003/tcp 10004/tcp 10005/tcp 10006/tcp 10007/tcp 10008/tcp 10009/tcp 10010/tcp 10011/tcp 10012/tcp 2>/dev/null; true",
+    "dev:kill": "fuser -k 10000/tcp 10001/tcp 10002/tcp 10003/tcp 10004/tcp 10005/tcp 10006/tcp 10007/tcp 10008/tcp 10009/tcp 10010/tcp 10011/tcp 10012/tcp 10013/tcp 2>/dev/null; true",
     "predev": "npm run dev:kill && npm run build:shared",
-    "dev": "concurrently --kill-others -n LOBBY,QUIZ,TABOO,UNO,SKYJOW,YAHTZEE,PUISSANCE4,JUSTONE,BATTLESHIP,DIAMANT,IMPOSTOR,LUDO,PERUDO \"npm run dev:lobby\" \"npm run dev:quiz\" \"npm run dev:taboo\" \"npm run dev:uno\" \"npm run dev:skyjow\" \"npm run dev:yahtzee\" \"npm run dev:puissance4\" \"npm run dev:justone\" \"npm run dev:battleship\" \"npm run dev:diamant\" \"npm run dev:impostor\" \"npm run dev:ludo\" \"npm run dev:perudo\""
+    "dev": "concurrently --kill-others -n LOBBY,QUIZ,TABOO,UNO,SKYJOW,YAHTZEE,PUISSANCE4,JUSTONE,BATTLESHIP,DIAMANT,IMPOSTOR,LUDO,PERUDO,CANTSTOP \"npm run dev:lobby\" \"npm run dev:quiz\" \"npm run dev:taboo\" \"npm run dev:uno\" \"npm run dev:skyjow\" \"npm run dev:yahtzee\" \"npm run dev:puissance4\" \"npm run dev:justone\" \"npm run dev:battleship\" \"npm run dev:diamant\" \"npm run dev:impostor\" \"npm run dev:ludo\" \"npm run dev:perudo\" \"npm run dev:cantstop\""
   },
   "devDependencies": {
     "concurrently": "^9.2.1"
