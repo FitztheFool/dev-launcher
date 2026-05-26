@@ -16,6 +16,8 @@
 | [Imposteur](https://github.com/FitztheFool/impostor-server)          | 10 010     |
 | [Ludo](https://github.com/FitztheFool/ludo-server)                   | 10 011     |
 | [Perudo](https://github.com/FitztheFool/perudo-server)               | 10 012     |
+| [Can't Stop](https://github.com/FitztheFool/cant-stop-server)        | 10 013     |
+| [Mille Bornes](https://github.com/FitztheFool/mille-bornes-server)   | 10 014     |
 
 ---
 
