@@ -158,6 +158,7 @@ declare -A SERVERS=(
     ["perudo-server"]="10012"
     ["cant-stop-server"]="10013"
     ["mille-bornes-server"]="10014"
+    ["spyfall-server"]="10015"
 )
 
 for server in "${!SERVERS[@]}"; do
@@ -218,6 +219,7 @@ NEXT_PUBLIC_LUDO_SERVER_URL="http://localhost:10011"
 NEXT_PUBLIC_PERUDO_SERVER_URL="http://localhost:10012"
 NEXT_PUBLIC_CANT_STOP_SERVER_URL="http://localhost:10013"
 NEXT_PUBLIC_MILLE_BORNES_SERVER_URL="http://localhost:10014"
+NEXT_PUBLIC_SPYFALL_SERVER_URL="http://localhost:10015"
 
 EOF
 success ".env frontend (quiz)"
@@ -238,6 +240,7 @@ SIMPLE_SERVERS=(
     "perudo-server:10012"
     "cant-stop-server:10013"
     "mille-bornes-server:10014"
+    "spyfall-server:10015"
 )
 
 for entry in "${SIMPLE_SERVERS[@]}"; do
@@ -274,6 +277,7 @@ LUDO_SERVER_URL="http://localhost:10011"
 PERUDO_SERVER_URL="http://localhost:10012"
 CANT_STOP_SERVER_URL="http://localhost:10013"
 MILLE_BORNES_SERVER_URL="http://localhost:10014"
+SPYFALL_SERVER_URL="http://localhost:10015"
 EOF
 success ".env lobby-server (port 10000)"
 
