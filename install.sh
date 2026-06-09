@@ -142,33 +142,33 @@ KWIZAR_DIR="$(cd "$SCRIPT_DIR/../kwizar" && pwd)"
 clone_or_pull "shared" "$SCRIPT_DIR/shared"
 
 # ─── Registre des serveurs de jeu — SOURCE UNIQUE DE VÉRITÉ ────────────────────
-# Format : "dossier|port|var_front|var_lobby"
-#   var_front → NEXT_PUBLIC_<var_front>_SERVER_URL  (dans le .env du frontend)
-#   var_lobby → <var_lobby>_SERVER_URL              (dans le .env du lobby)
+# Format : "dossier|port|var"
+#   var → NEXT_PUBLIC_<var>_SERVER_URL  (dans le .env du frontend)
+#       → <var>_SERVER_URL              (dans le .env du lobby)
 # Ajouter un jeu = ajouter UNE ligne ici (clonage, .env, install et build suivent).
 LOBBY_NAME="lobby-server"
 LOBBY_PORT=10000
 GAME_SERVERS=(
-    "uno-server|10001|UNO|UNO"
-    "quiz-server|10002|QUIZ|QUIZ"
-    "taboo-server|10003|TABOO|TABOO"
-    "skyjow-server|10004|SKYJOW|SKYJOW"
-    "yahtzee-server|10005|YAHTZEE|YAHTZEE"
-    "puissance4-server|10006|PUISSANCE4|PUISSANCE4"
-    "just-one-server|10007|JUSTONE|JUSTONE"
-    "battleship-server|10008|BATTLESHIP|BATTLESHIP"
-    "diamant-server|10009|DIAMANT|DIAMANT"
-    "impostor-server|10010|IMPOSTOR|IMPOSTOR"
-    "ludo-server|10011|LUDO|LUDO"
-    "perudo-server|10012|PERUDO|PERUDO"
-    "cant-stop-server|10013|CANT_STOP|CANT_STOP"
-    "mille-bornes-server|10014|MILLE_BORNES|MILLE_BORNES"
-    "spyfall-server|10015|SPYFALL|SPYFALL"
+    "uno-server|10001|UNO"
+    "quiz-server|10002|QUIZ"
+    "taboo-server|10003|TABOO"
+    "skyjow-server|10004|SKYJOW"
+    "yahtzee-server|10005|YAHTZEE"
+    "puissance4-server|10006|PUISSANCE4"
+    "just-one-server|10007|JUSTONE"
+    "battleship-server|10008|BATTLESHIP"
+    "diamant-server|10009|DIAMANT"
+    "impostor-server|10010|IMPOSTOR"
+    "ludo-server|10011|LUDO"
+    "perudo-server|10012|PERUDO"
+    "cant-stop-server|10013|CANT_STOP"
+    "mille-bornes-server|10014|MILLE_BORNES"
+    "spyfall-server|10015|SPYFALL"
 )
 
 clone_or_pull "$LOBBY_NAME" "$SCRIPT_DIR/$LOBBY_NAME"
 for entry in "${GAME_SERVERS[@]}"; do
-    IFS='|' read -r name _ _ _ <<< "$entry"
+    IFS='|' read -r name _ _ <<< "$entry"
     clone_or_pull "$name" "$SCRIPT_DIR/$name"
 done
 
@@ -181,10 +181,10 @@ header "Génération des fichiers .env"
 FRONT_URLS="NEXT_PUBLIC_LOBBY_SERVER_URL=\"http://localhost:${LOBBY_PORT}\""
 LOBBY_URLS=""
 for entry in "${GAME_SERVERS[@]}"; do
-    IFS='|' read -r name port frontVar lobbyVar <<< "$entry"
-    FRONT_URLS+=$'\n'"NEXT_PUBLIC_${frontVar}_SERVER_URL=\"http://localhost:${port}\""
+    IFS='|' read -r name port var <<< "$entry"
+    FRONT_URLS+=$'\n'"NEXT_PUBLIC_${var}_SERVER_URL=\"http://localhost:${port}\""
     [[ -n "$LOBBY_URLS" ]] && LOBBY_URLS+=$'\n'
-    LOBBY_URLS+="${lobbyVar}_SERVER_URL=\"http://localhost:${port}\""
+    LOBBY_URLS+="${var}_SERVER_URL=\"http://localhost:${port}\""
 done
 
 # .env Frontend (quiz)
@@ -228,7 +228,7 @@ success ".env frontend (quiz)"
 
 # .env serveurs de jeu (FRONTEND_URL + PORT + clés)
 for entry in "${GAME_SERVERS[@]}"; do
-    IFS='|' read -r server port frontVar lobbyVar <<< "$entry"
+    IFS='|' read -r server port _ <<< "$entry"
     cat > "$SCRIPT_DIR/$server/.env" <<EOF
 FRONTEND_URL="${FRONTEND_URL}"
 PORT=${port}
@@ -270,7 +270,7 @@ npm run build --prefix "$SCRIPT_DIR/shared" --loglevel error
 success "shared (build)"
 
 for entry in "${GAME_SERVERS[@]}"; do
-    IFS='|' read -r server port frontVar lobbyVar <<< "$entry"
+    IFS='|' read -r server port _ <<< "$entry"
     install_deps "$SCRIPT_DIR/$server" "$server"
     info "$server — build"
     npm run build --prefix "$SCRIPT_DIR/$server" --loglevel error
