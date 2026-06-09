@@ -154,7 +154,7 @@ GAME_SERVERS=(
     "taboo-server|10003|TABOO|TABOO"
     "skyjow-server|10004|SKYJOW|SKYJOW"
     "yahtzee-server|10005|YAHTZEE|YAHTZEE"
-    "puissance4-server|10006|P4|PUISSANCE4"
+    "puissance4-server|10006|PUISSANCE4|PUISSANCE4"
     "just-one-server|10007|JUSTONE|JUSTONE"
     "battleship-server|10008|BATTLESHIP|BATTLESHIP"
     "diamant-server|10009|DIAMANT|DIAMANT"
