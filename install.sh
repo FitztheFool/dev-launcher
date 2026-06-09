@@ -141,34 +141,51 @@ KWIZAR_DIR="$(cd "$SCRIPT_DIR/../kwizar" && pwd)"
 # Package partagé
 clone_or_pull "shared" "$SCRIPT_DIR/shared"
 
-# Serveurs dans dev-launcher
-declare -A SERVERS=(
-    ["lobby-server"]="10000"
-    ["uno-server"]="10001"
-    ["quiz-server"]="10002"
-    ["taboo-server"]="10003"
-    ["skyjow-server"]="10004"
-    ["yahtzee-server"]="10005"
-    ["puissance4-server"]="10006"
-    ["just-one-server"]="10007"
-    ["battleship-server"]="10008"
-    ["diamant-server"]="10009"
-    ["impostor-server"]="10010"
-    ["ludo-server"]="10011"
-    ["perudo-server"]="10012"
-    ["cant-stop-server"]="10013"
-    ["mille-bornes-server"]="10014"
-    ["spyfall-server"]="10015"
+# ─── Registre des serveurs de jeu — SOURCE UNIQUE DE VÉRITÉ ────────────────────
+# Format : "dossier|port|var_front|var_lobby"
+#   var_front → NEXT_PUBLIC_<var_front>_SERVER_URL  (dans le .env du frontend)
+#   var_lobby → <var_lobby>_SERVER_URL              (dans le .env du lobby)
+# Ajouter un jeu = ajouter UNE ligne ici (clonage, .env, install et build suivent).
+LOBBY_NAME="lobby-server"
+LOBBY_PORT=10000
+GAME_SERVERS=(
+    "uno-server|10001|UNO|UNO"
+    "quiz-server|10002|QUIZ|QUIZ"
+    "taboo-server|10003|TABOO|TABOO"
+    "skyjow-server|10004|SKYJOW|SKYJOW"
+    "yahtzee-server|10005|YAHTZEE|YAHTZEE"
+    "puissance4-server|10006|P4|PUISSANCE4"
+    "just-one-server|10007|JUSTONE|JUSTONE"
+    "battleship-server|10008|BATTLESHIP|BATTLESHIP"
+    "diamant-server|10009|DIAMANT|DIAMANT"
+    "impostor-server|10010|IMPOSTOR|IMPOSTOR"
+    "ludo-server|10011|LUDO|LUDO"
+    "perudo-server|10012|PERUDO|PERUDO"
+    "cant-stop-server|10013|CANT_STOP|CANT_STOP"
+    "mille-bornes-server|10014|MILLE_BORNES|MILLE_BORNES"
+    "spyfall-server|10015|SPYFALL|SPYFALL"
 )
 
-for server in "${!SERVERS[@]}"; do
-    clone_or_pull "$server" "$SCRIPT_DIR/$server"
+clone_or_pull "$LOBBY_NAME" "$SCRIPT_DIR/$LOBBY_NAME"
+for entry in "${GAME_SERVERS[@]}"; do
+    IFS='|' read -r name _ _ _ <<< "$entry"
+    clone_or_pull "$name" "$SCRIPT_DIR/$name"
 done
 
 success "Tous les dépôts sont prêts"
 
 # ─── Écriture des .env ────────────────────────────────────────────────────────
 header "Génération des fichiers .env"
+
+# Listes d'URLs dérivées du registre (une seule source : GAME_SERVERS)
+FRONT_URLS="NEXT_PUBLIC_LOBBY_SERVER_URL=\"http://localhost:${LOBBY_PORT}\""
+LOBBY_URLS=""
+for entry in "${GAME_SERVERS[@]}"; do
+    IFS='|' read -r name port frontVar lobbyVar <<< "$entry"
+    FRONT_URLS+=$'\n'"NEXT_PUBLIC_${frontVar}_SERVER_URL=\"http://localhost:${port}\""
+    [[ -n "$LOBBY_URLS" ]] && LOBBY_URLS+=$'\n'
+    LOBBY_URLS+="${lobbyVar}_SERVER_URL=\"http://localhost:${port}\""
+done
 
 # .env Frontend (quiz)
 cat > "$KWIZAR_DIR/.env" <<EOF
@@ -204,54 +221,20 @@ GMAIL_CLIENT_ID="${GMAIL_CLIENT_ID}"
 GMAIL_CLIENT_SECRET="${GMAIL_CLIENT_SECRET}"
 GMAIL_REFRESH_TOKEN="${GMAIL_REFRESH_TOKEN}"
 
-NEXT_PUBLIC_LOBBY_SERVER_URL="http://localhost:10000"
-NEXT_PUBLIC_UNO_SERVER_URL="http://localhost:10001"
-NEXT_PUBLIC_QUIZ_SERVER_URL="http://localhost:10002"
-NEXT_PUBLIC_TABOO_SERVER_URL="http://localhost:10003"
-NEXT_PUBLIC_SKYJOW_SERVER_URL="http://localhost:10004"
-NEXT_PUBLIC_YAHTZEE_SERVER_URL="http://localhost:10005"
-NEXT_PUBLIC_P4_SERVER_URL="http://localhost:10006"
-NEXT_PUBLIC_JUSTONE_SERVER_URL="http://localhost:10007"
-NEXT_PUBLIC_BATTLESHIP_SERVER_URL="http://localhost:10008"
-NEXT_PUBLIC_DIAMANT_SERVER_URL="http://localhost:10009"
-NEXT_PUBLIC_IMPOSTOR_SERVER_URL="http://localhost:10010"
-NEXT_PUBLIC_LUDO_SERVER_URL="http://localhost:10011"
-NEXT_PUBLIC_PERUDO_SERVER_URL="http://localhost:10012"
-NEXT_PUBLIC_CANT_STOP_SERVER_URL="http://localhost:10013"
-NEXT_PUBLIC_MILLE_BORNES_SERVER_URL="http://localhost:10014"
-NEXT_PUBLIC_SPYFALL_SERVER_URL="http://localhost:10015"
+${FRONT_URLS}
 
 EOF
 success ".env frontend (quiz)"
 
-# .env serveurs classiques (FRONTEND_URL + PORT + INTERNAL_API_KEY)
-SIMPLE_SERVERS=(
-    "uno-server:10001"
-    "quiz-server:10002"
-    "taboo-server:10003"
-    "skyjow-server:10004"
-    "yahtzee-server:10005"
-    "puissance4-server:10006"
-    "just-one-server:10007"
-    "battleship-server:10008"
-    "diamant-server:10009"
-    "impostor-server:10010"
-    "ludo-server:10011"
-    "perudo-server:10012"
-    "cant-stop-server:10013"
-    "mille-bornes-server:10014"
-    "spyfall-server:10015"
-)
-
-for entry in "${SIMPLE_SERVERS[@]}"; do
-    server="${entry%%:*}"
-    port="${entry##*:}"
+# .env serveurs de jeu (FRONTEND_URL + PORT + clés)
+for entry in "${GAME_SERVERS[@]}"; do
+    IFS='|' read -r server port frontVar lobbyVar <<< "$entry"
     cat > "$SCRIPT_DIR/$server/.env" <<EOF
 FRONTEND_URL="${FRONTEND_URL}"
 PORT=${port}
 INTERNAL_API_KEY="${INTERNAL_API_KEY}"
 SOCKET_USER_SECRET="${SOCKET_USER_SECRET}"
-LOBBY_SERVER_URL="http://localhost:10000"
+LOBBY_SERVER_URL="http://localhost:${LOBBY_PORT}"
 EOF
     success ".env $server (port $port)"
 done
@@ -263,21 +246,7 @@ PORT=10000
 INTERNAL_API_KEY="${INTERNAL_API_KEY}"
 SOCKET_USER_SECRET="${SOCKET_USER_SECRET}"
 
-UNO_SERVER_URL="http://localhost:10001"
-QUIZ_SERVER_URL="http://localhost:10002"
-TABOO_SERVER_URL="http://localhost:10003"
-SKYJOW_SERVER_URL="http://localhost:10004"
-YAHTZEE_SERVER_URL="http://localhost:10005"
-PUISSANCE4_SERVER_URL="http://localhost:10006"
-JUSTONE_SERVER_URL="http://localhost:10007"
-BATTLESHIP_SERVER_URL="http://localhost:10008"
-DIAMANT_SERVER_URL="http://localhost:10009"
-IMPOSTOR_SERVER_URL="http://localhost:10010"
-LUDO_SERVER_URL="http://localhost:10011"
-PERUDO_SERVER_URL="http://localhost:10012"
-CANT_STOP_SERVER_URL="http://localhost:10013"
-MILLE_BORNES_SERVER_URL="http://localhost:10014"
-SPYFALL_SERVER_URL="http://localhost:10015"
+${LOBBY_URLS}
 EOF
 success ".env lobby-server (port 10000)"
 
@@ -300,11 +269,17 @@ info "shared — build"
 npm run build --prefix "$SCRIPT_DIR/shared" --loglevel error
 success "shared (build)"
 
-for entry in "${SIMPLE_SERVERS[@]}"; do
-    server="${entry%%:*}"
+for entry in "${GAME_SERVERS[@]}"; do
+    IFS='|' read -r server port frontVar lobbyVar <<< "$entry"
     install_deps "$SCRIPT_DIR/$server" "$server"
+    info "$server — build"
+    npm run build --prefix "$SCRIPT_DIR/$server" --loglevel error
+    success "$server (build)"
 done
-install_deps "$SCRIPT_DIR/lobby-server" "lobby-server"
+install_deps "$SCRIPT_DIR/$LOBBY_NAME" "$LOBBY_NAME"
+info "$LOBBY_NAME — build"
+npm run build --prefix "$SCRIPT_DIR/$LOBBY_NAME" --loglevel error
+success "$LOBBY_NAME (build)"
 install_deps "$KWIZAR_DIR" "quiz (frontend)"
 
 # ─── Base de données ──────────────────────────────────────────────────────────
