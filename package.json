@@ -1,8 +1,14 @@
 {
   "name": "dev-launcher",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Installeur du projet de jeux FitztheFool : clone les serveurs, génère les .env et installe les dépendances.",
+  "bin": {
+    "dev-launcher": "install.sh"
+  },
+  "files": [
+    "install.sh",
+    "README.md"
+  ],
   "scripts": {
     "dev:lobby": "npm run dev --prefix lobby-server",
     "dev:quiz": "npm run dev --prefix quiz-server",
