@@ -29,6 +29,7 @@ services:
       CANT_STOP_SERVER_URL: http://cant-stop-server:10013
       MILLE_BORNES_SERVER_URL: http://mille-bornes-server:10014
       SPYFALL_SERVER_URL: http://spyfall-server:10015
+      ATLANTIDE_SERVER_URL: http://atlantide-server:10016
     ports:
       - "10000:10000"
     restart: unless-stopped
@@ -239,6 +240,20 @@ services:
       LOBBY_SERVER_URL: http://lobby-server:10000
     ports:
       - "10015:10015"
+    restart: unless-stopped
+    depends_on:
+      - lobby-server
+
+  atlantide-server:
+    build:
+      context: ./atlantide-server
+      dockerfile: ../Dockerfile
+    env_file: ./atlantide-server/.env
+    environment:
+      PORT: 10016
+      LOBBY_SERVER_URL: http://lobby-server:10000
+    ports:
+      - "10016:10016"
     restart: unless-stopped
     depends_on:
       - lobby-server

@@ -164,6 +164,7 @@ GAME_SERVERS=(
     "cant-stop-server|10013|CANT_STOP"
     "mille-bornes-server|10014|MILLE_BORNES"
     "spyfall-server|10015|SPYFALL"
+    "atlantide-server|10016|ATLANTIDE"
 )
 
 clone_or_pull "$LOBBY_NAME" "$SCRIPT_DIR/$LOBBY_NAME"
