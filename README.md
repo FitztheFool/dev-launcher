@@ -18,6 +18,15 @@
 | [Perudo](https://github.com/FitztheFool/perudo-server)               | 10 012     |
 | [Can't Stop](https://github.com/FitztheFool/cant-stop-server)        | 10 013     |
 | [Mille Bornes](https://github.com/FitztheFool/mille-bornes-server)   | 10 014     |
+| [Spyfall](https://github.com/FitztheFool/spyfall-server)             | 10 015     |
+| [Atlantide](https://github.com/FitztheFool/atlantide-server)         | 10 016     |
+| [Abalone](https://github.com/FitztheFool/abalone-server)             | 10 017     |
+| [Blokus](https://github.com/FitztheFool/blokus-server)               | 10 018     |
+| [Six qui prend](https://github.com/FitztheFool/sixquiprend-server)   | 10 019     |
+| [Tanks](https://github.com/FitztheFool/tanks-server)                 | 10 020     |
+| [Complot](https://github.com/FitztheFool/complot-server)             | 10 021     |
+| [Dames](https://github.com/FitztheFool/dames-server)                 | 10 022     |
+
 
 ---
 
