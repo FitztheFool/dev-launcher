@@ -176,6 +176,7 @@ GAME_SERVERS=(
     "tanks-server|10020|TANKS"
     "complot-server|10021|COMPLOT"
     "dames-server|10022|DAMES"
+    "backgammon-server|10023|BACKGAMMON"
 )
 
 clone_or_pull "$LOBBY_NAME" "$SCRIPT_DIR/$LOBBY_NAME"
